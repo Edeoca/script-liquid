@@ -1,0 +1,12 @@
+<!-- add to cart ================================================== -->
+Location:{% for tag in item.product.tags  %}
+    {% if tag contains "L1" or tag contains "L2" or tag contains "L3" or tag contains "L4" %}
+     {{tag}}
+    {% endif %}
+      {% endfor %}
+<!-- add to product ================================================== -->
+Location:{% for tag in product.tags  %}
+	  {% if tag contains "L1" or tag contains "L2" or tag contains "L3" or tag contains "L4" %}
+	   {{tag}}
+	  {% endif %}
+      {% endfor %}
