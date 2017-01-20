@@ -1,0 +1,13 @@
+<div class="image">
+          <a href="{{ product.featured_image | product_img_url: 'original' }}" class="cloud-zoom" rel="position: 'inside', showTitle: 'false'" id="placeholder">
+            <img src="{{ product.featured_image | product_img_url: 'large' }}" alt="{{ product.title | escape }}" />
+            {% if 
+            product.available and 
+            product.variants.first.inventory_management == "shopify" and 
+            product.variants.first.inventory_quantity > 0 %}
+              {% else %} 
+                   <span class="Bagde">Sold Out!!</span>
+            {% endif %}
+
+          </a>
+        </div>
