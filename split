@@ -1,0 +1,50 @@
+ <div class="tabs">
+    <ul class="tab-switch__nav">
+            <li>
+              <a href="#tab_1_contents" data-link="description" class="tab-switch__trigger h3">Description</a>
+            </li>
+        {% if product.description contains '<!--SPLIT-->'  %}
+        	<li><a href="#tab_2_contents"  data-link="extra1"  class="tab-switch__trigger h3">Features</a></li>
+      	 {% endif %}
+        {% if product.description contains '<span>'  %}
+        	<li><a href="#tab_3_contents"   data-link="extra2"  class="tab-switch__trigger h3">Instructions</a></li>
+        {% endif %}
+        	<li><a href="#tab_4_contents"  data-link="extra3"  class="tab-switch__trigger h3">Reviews</a></li>
+      </ul>
+
+ 
+        <!-- Tab 1 Contents -->
+        <div id="tab_1_contents" class="tab-switch__content" data-content="description">
+           		<div class="product-description rte" itemprop="description" >
+        			{% assign words = product.description | split: '<!--SPLIT-->' %}
+        			{{ words.first }}
+                </div>
+        </div>
+    
+        <!-- Tab 2 Contents -->
+        <div id="tab_2_contents" class="tab-switch__content" data-content="extra1">
+          {% if product.description contains '<!--SPLIT-->'  %}
+                    <div class="rte">
+                      {% assign words = product.description | split: '<!--SPLIT-->' %}
+                      {{ words.last }}
+                    </div>        
+          {% endif %}  
+        </div>
+        
+    
+        <!-- Tab 3 Contents -->
+        <div id="tab_3_contents" class="tab-switch__content" data-content="extra2">
+          {% if product.description contains '<span>'  %}
+          			  {% assign words = product.description | split: '<span>' %}
+                      {{ words.last }}
+          {% endif %}
+        </div>
+
+        <!-- Tab 4 Contents -->
+        <div id="tab_4_contents" class="tab-switch__content" data-content="extra3"> 
+        	<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+        </div>
+
+      
+    
+      </div><!--END tab contents-->
