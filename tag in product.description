@@ -1,0 +1,12 @@
+   
+            <img id="test" src="{{ 'shipping-ico.jpg' | asset_url}}" alt="" >
+            <span> Available to ship:  {% assign attribute_keyword = 's:' %}
+{% assign marker = ':' %}
+{% for tag in product.tags %}
+   		{% if tag contains attribute_keyword %}
+      {{ tag | remove: attribute_keyword  }} 
+   		{% endif %}
+{% endfor %} days</span>
+
+
+
