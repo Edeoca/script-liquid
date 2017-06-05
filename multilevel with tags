@@ -1,17 +1,19 @@
           
+          
 <div class="sidebar">
 <h4 class="apolo">Categories</h4>
-<ul class="treeview">
+<ul class="treeview" id="apolo">
             
               {% for link in linklists.sidebar.links %}
   
 {% capture first %}{{link.handle}}{% endcapture %}
-
- {%assign url = collection.url %}  
+  
+  {% capture url %}/collections/{{collection.handle}}{% endcapture %}
   
  {% capture hello %}{{url}}/{{link.handle | escape}}{% endcapture %}
   
 {% capture custom_url %}{{ shop.url}}{{ page.url }}{% endcapture %}
+
 {% capture car_make %}{{ canonical_url  | remove: custom_url }}{% endcapture %}
  
  {%capture last %} {{url}}/{{link.handle}} {%endcapture%}
@@ -19,7 +21,7 @@
 
                 <li>
                   
-                <a {%if car_make  contains link.handle %}{% endif %} href="{{hello}}" title="{{ link.title | escape }}">{{ link.title }}</a>     
+                <a href="{{hello}}" title="{{ link.title | escape }}">{{ link.title }}</a>     
                   
                     {% if linklists[link.handle] != empty %}
                   
@@ -27,7 +29,7 @@
                   
                     {% for link in linklists[link.handle].links %}     
                   
-                      {% if car_make  contains link.handle %}
+                      {% if car_make  contains first %}
                   
                         {% assign display_sublinks = true %} 
                   
@@ -35,7 +37,7 @@
                   
                     {% endfor %}            
                   
-                    {% if display_sublinks or car_make contains link.handle %}
+                    {% if display_sublinks or car_make contains first %}
     
                       <ul>        
   
@@ -45,7 +47,7 @@
                         
                         <li>
                           
-                          <a  {%if car_make  contains link.handle %}{% endif %} href=" {{url}}/{{first}}+{{link.handle | downcase | escape}}" title="{{ link.title }}">{{ link.title }}</a>
+                          <a  href="{{url}}/{{first}}+{{link.handle | downcase | escape}}" title="{{ link.title }}">{{ link.title }}</a>
                           
                            {% if linklists[link.handle] != empty %}
                           
@@ -53,7 +55,7 @@
                           
                           {% for link in linklists[link.handle].links %}  
                           
-                      {% if car_make  contains link.handle %} 
+                      {% if car_make  contains second %} 
                           
                         {% assign display_sublinks = true %} 
                           
@@ -61,14 +63,14 @@
                           
                     {% endfor %} 
                           
-                           {% if display_sublinks or car_make  contains link.handle %}
+                           {% if display_sublinks or car_make  contains second %}
                           
-                          <ul>                 
+                          <ul>
                             {% for link in linklists[link.handle].links %} 
                             
                        <li>         
                          
-                          <a  {%if car_make  contains link.handle %}{% endif %} href=" {{url}}/{{first}}+{{second}}+{{link.handle | downcase | escape}}" title="{{ link.title }}">{{ link.title }}</a>  
+                          <a href="{{url}}/{{first}}+{{second}}+{{link.handle | downcase | escape}}" title="{{ link.title }}">{{ link.title }}</a>  
                          
                         </li >                 
                                {% endfor %}     
@@ -133,20 +135,6 @@
 </style>
 
 
-
-<script>
-jQuery(function($) {
-  var stay = '{{collection.url}}';
-     var newpath = window.location.pathname; 
-     $('.treeview ul').each(function() {
-      if (newpath.toLowerCase() == stay) {
-       $(this).hide(); 
-      }
-     });
-     });
-
-</script>
-
 <script>
 jQuery(function($) {
      var path = window.location.href; 
@@ -159,6 +147,35 @@ jQuery(function($) {
 
 
 </script>
+<div id="article-count" style="display:none;" data-count="{{collection.products.size}}"></div>
+<script type="text/javascript">
+  $('.treeview li').each(function(){
+    var $this = $(this),
+        link = $this.find('a'),
+        url = link.attr('href');
+    $.get(url, function(data){
+      var count = parseInt($(data).find('#article-count').data('count'),10);
+      link.append(" (" + count + ")");
+      if (count === 0) { // Remove tags with 0 articles
+
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
