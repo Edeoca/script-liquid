@@ -1,0 +1,85 @@
+{% if section.blocks.size > 0 %}
+
+<div class="index-module carousel-wrapper" style="background-color: {{ section.settings.carousel_bg }}">
+
+<div id="carousel-{{ section.id }}" class="owl-carousel">
+{% for block in section.blocks %}
+	<div class="carousel-slide--{{ block.id }}" {{ block.shopify_attributes }}>
+		{% if block.settings.carousel_image != blank %}
+      <a href="{{block.settings.banner_link}}"><img class="carousel_image--{{ block.id }}" src="{{ block.settings.carousel_image | img_url: '240x' }}"></a>	
+		{% endif %}		
+		
+		{% if block.settings.carousel_image == blank %}
+			{{ 'image' | placeholder_svg_tag: 'instagram__image' }}
+		{% endif %}
+	</div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Banner-1",
+    "max_blocks": 15,
+    "settings": [
+      {  
+         "type":"header",
+         "content":"In depth Banner option"
+      },
+      {  
+         "type":"color",
+         "id":"carousel_bg",
+         "label":"Banner background",
+         "default":"#fff"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "carousel_image",
+            "label": "Image"
+          },
+  		 {
+            "type": "url",
+            "id": "banner_link",
+            "label": "Image link"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Banner-1",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+.red-border{border:1px solid red}
+.carousel-wrapper{width:100%;max-width:100%;padding:50px 0}
+
+{% endstylesheet %}
+
