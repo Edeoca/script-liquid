@@ -1,0 +1,25 @@
+{%capture row_1%}{{settings.banner_row1}}{%endcapture%}
+    
+       <script>
+        $("#carousel-banner-1").owlCarousel({
+    loop:true,
+	margin:10,
+	autoplay:true,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:2,
+            nav:false
+        },
+        600:{
+            items:3,
+            nav:false
+        },
+        1000:{
+            items:{{row_1}},
+            nav:false
+        }
+    }
+})
+    </script>
+    
