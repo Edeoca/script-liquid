@@ -1,0 +1,47 @@
+angular.module('app')
+    .directive('jsCartTotal', jsCartTotalDirective);
+
+function jsCartTotalDirective() {
+    return {
+        restrict: 'A',
+        transclude: true,
+        controllerAs: 'vm',
+        link: function (scope, element, attrs, ctrl) {
+            ctrl.init();
+        },
+        controller: function () {
+            var vm = this,
+                PRODUCT_PRICE = parseFloat(angular.element('.price.h2').text().trim().replace(/[^0-9\.]+/g, "")) || 0.00;
+
+            //console.log(PRODUCT_PRICE);
+            vm.init = init;
+            vm.total = 0.00;
+
+            function init() {
+                angular.element('.product-customizer-options select, .product-customizer-options input').on('change', updateTotal);
+                updateTotal();
+            }
+
+            function updateTotal() {
+                // TODO: Provide better handling of product totals to eliminate delays in rendering
+                // 1. Get total dollar value of all options from shopstorm object (window.shopstorm) or from DOM
+                //      (product-customizer-customizations-total > span)
+                // 2. Set new const OPTIONS_TOTAL with value from #1
+                // 3. Sum OPTIONS_TOTAL and PRODUCT_PRICE
+                // 4. Set vm.total with the value from #3
+
+                // Current Process
+                // FIXME: There is a delay when rendering the total price. When selecting an option, the total for
+                // the options rendered instantly, but there is a slighlt deplay in the rendering of the product price
+                // plus the total. Fix with above TODO.
+                var optionsTotal = parseFloat(angular.element('.product-customizer-customizations-total > span').text()
+                    .trim().replace(/[^0-9\.]+/g, "")) || 0.00;
+
+                vm.total = PRODUCT_PRICE + optionsTotal;
+              
+            //  console.log(vm.total);
+            }
+        },
+        template: '<div class="product-price-total">TOTAL: {[{ vm.total | currency }]}</div>'
+    };
+}
