@@ -1,0 +1,71 @@
+{% assign count = 0 %}
+
+{%assign split_desc = product.description | split: '{banner}'%}
+
+{%for data in split_desc%}
+
+{% assign count = count | plus: 1 %}
+
+{%if forloop.index == 1 %}
+
+{%assign item_a = split_desc[0] %}
+
+{%endif%}
+
+{%if forloop.index == 2 %}
+
+{%assign item_b = split_desc[1] %}
+
+{%endif%}
+
+{%if forloop.index == 3 %}
+
+{%assign item_c = split_desc[2] %}
+
+{%endif%}
+
+
+{%if forloop.index == 4 %}
+
+{%assign item_d = split_desc[3] %}
+
+{%endif%}
+
+{%endfor%}
+
+
+
+{%if count == 5%}
+
+
+<div class="bg_produt-custom-tpl">
+<div class="custom-wrapper wrapper grid--full test-full homepage-double equalOverflowHeight use_screen_one_half grid--rev">
+<div class="grid__item large--one-half medium--one-half double__block homepage-image homepage--white preventOverflow">
+ <div class="background-size-cover bg-hidden"></div>
+    </div>
+        <div class="grid__item large--one-half medium--one-half double__block preventOverflow">
+          <div class="content--centered">
+            <div class="text-left preventOverflowContent">        
+                <h1>{{item_b}}</h1>
+                <div class="rte rte--homepage">
+                  {{item_c}}
+                </div>
+                <span class="btn btn--clear btn--square uppercase custom-btn">
+                  {{item_d}}
+                </span>       
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+<div class="bg-data hide-it">
+{{item_a}}
+</div>
+
+<script>
+ var img = $(".bg-data").find("img").attr("src");
+ $('.background-size-cover').css("background-image", "url("+img+")");
+ $('.homepage-double').css("background-image", "url("+img+")");  
+  
+</script>
+{%endif%}
